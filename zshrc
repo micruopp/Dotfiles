@@ -6,6 +6,16 @@
 # Main config file for zshell.
 #/
 
+source "$DOTFILES/sh/aliases"
+
+
+
+
+
+
+
+
+
 # Apparently this line will only run on startup...
 # And I'm assuming just on Linux.
 # [[ $(fgconsole 2>/dev/null) == 1 exec startx && /home/username/some-script.sh ]]
@@ -21,7 +31,7 @@
 #/
 
 ##
-# TODO: add the prompt variables PS0 > PS4 into this timeline.
+# TODO: /zsh does not use these variables / add the prompt variables PS0 > PS4 into this timeline.
 # Understanding the loop
 # Quoting a deleted reddit account:
 # >
@@ -46,9 +56,9 @@ precmd() {}
 #   "$(tput blink)" to blink; "$(tput sgr0)" to default
 PROMPT=$'\n    %F{69}%n@%B%m\n    %~\n    >%b%f%F{159} '
 
-# Add a new line before the output
 preexec() {
-  # print ""
+  # Add a new line before the output
+  print ""
   # echo -n "\\e[0;37m"
 }
 
@@ -66,14 +76,16 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 alias ~='cd ~ && clear && ls -a'
 alias /='cd / && clear && ls -a'
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
+alias ..='cd .. && ls -a'
+alias ...='cd ../.. && ls -a'
+alias ....='cd ../../.. && ls -a'
+alias .....='cd ../../../.. && ls -a'
+alias ......='cd ../../../../.. && ls -a'
 
 alias l='ls -a'
 alias la='ls -la'
+
+alias cl='clear'
 
 # Change directory and list it
 # TODO:  Make use of the above TODO once implemented.
@@ -87,12 +99,17 @@ c() {
   ls -la
 }
 
+
+alias up="uptime | egrep -o 'up.*[0-9]:[0-9][0-9]'"
+
 # --- idk.zsh --- #
 #
 # I don't know... a simple tool for managing 
 #   shell scripts.
 #/
 
+## TODO: Expand idk to include all dotfiles
+#
 zsh_root_dir=$HOME'/Developer/lib/zsh/'
 
 # Reserved words -- scripts in the root dir cannot be named these:
@@ -192,7 +209,8 @@ __idk() {
       echo -e '\033[3m'"${scriptname}.zsh"'\033[23m'" is not in the library."
     fi
   else
-    vim ~/.zshrc && source ~/.zshrc
+    configfile="$HOME/Developer/Dotfiles/zshrc"
+    vim $configfile && source $configfile
   fi
 }
 
@@ -249,7 +267,27 @@ browse() {
   open -a "Firefox Developer Edition" ${@}index.html
   # open -a "Firefox" $@
   # open -a "Safari" $@
+  # open -a "Orion" $@
 }
+
+
+search() {
+  echo "TODO: implement a 'grep -A1 $1 ~/Developer/Notes/.session-*.txt' search"
+  echo "TODO: create an interface to select a result"
+  echo "TODO: implement lucky search, automatically opening first result in browser"
+  echo "TODO: adding a bookmark to session should be automatic -- i shouldn't have to create a new file for each day"
+}
+
+
+# --- git --- #
+# 
+# aliases and helpers
+
+#alias gits='git status'
+#alias gitl='git log --oneline'
+#alias gitc='git commit -am "'
+     # This will open a prompt to
+     # write the commit message.
 
 
 # --- REMAINDER OF .zshrc --- #
@@ -314,5 +352,5 @@ echo -e "\033[3m.zshrc\033[0m sourced @ ${time}."
 # Add path variables
 # Ruby
 path=('/opt/homebrew/opt/ruby/bin' $path)
-path+='/opt/homebrew/lib/ruby/gems/3.1.0/bin'
+path=('/opt/homebrew/lib/ruby/gems/3.1.0/bin' $path)
 export PATH

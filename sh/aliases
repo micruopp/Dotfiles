@@ -1,0 +1,14 @@
+#!/bin/sh
+
+## System
+
+
+## Git
+##  
+## aliases and helpers
+
+alias gits='git status'
+alias gitl='git log --oneline'
+alias gitc='git commit -am "'
+     # This will open a prompt to
+     # write the commit message.
