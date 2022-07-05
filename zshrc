@@ -6,8 +6,9 @@
 # Main config file for zshell.
 #/
 
+export DOTFILES="$HOME/Developer/Dotfiles"
 source "$DOTFILES/sh/aliases"
-
+source "$DOTFILES/sh/os"
 
 
 
@@ -98,9 +99,6 @@ c() {
   cd $1
   ls -la
 }
-
-
-alias up="uptime | egrep -o 'up.*[0-9]:[0-9][0-9]'"
 
 # --- idk.zsh --- #
 #

@@ -1,7 +1,40 @@
 #!/bin/sh
 
 ## System
+alias ~='cd ~ && clear && ls -a'
+alias /='cd / && clear && ls -a'
 
+alias ..='cd .. && ls -a'
+alias ...='cd ../.. && ls -a'
+alias ....='cd ../../.. && ls -a'
+alias .....='cd ../../../.. && ls -a'
+alias ......='cd ../../../../.. && ls -a'
+
+alias l='ls -a'
+alias la='ls -la'
+
+alias cl='clear'
+
+# Change directory and list it
+# TODO:  Make use of the above TODO once implemented.
+cs() {
+  cd $1 && ls
+}
+
+c() {
+  clear
+  cd $1
+  ls -la
+}
+
+
+## Edit helper function
+## TODO: refactor EDITOR var to env file
+e() {
+  export EDITOR='vim'
+  # TODO: Check if $1 exists before sourcing
+  $EDITOR $1 && source $1
+}
 
 ## Git
 ##  
