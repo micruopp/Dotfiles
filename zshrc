@@ -11,9 +11,24 @@ source "$DOTFILES/sh/aliases"
 source "$DOTFILES/sh/os"
 
 
+sv() {
+  #if [[ $1 = http* ]] ; then
+  #
+  # This should accept the following arg patterns:
+  #     <filename>
+  #     <url>
+  #     <url> <filename>
+  #
+  # And should append to the file if it exists,
+  # otherwise create the file with the given contents.
+  #
+  # Timestamps should be added before the content.
+}
 
-
-
+__sv_from_board() {
+  filename="$1.urls.txt"
+  pbpaste >> $filename
+}
 
 
 
