@@ -1,0 +1,60 @@
+#!/bin/sh
+
+## Operating system tool
+## Main function
+os() {
+  for arg in $@
+  do
+    case $arg in
+      backup)
+        __os_backup
+        ;;
+      info)
+        __os_info
+        ;;
+      update)
+        __os_update
+        ;;
+      *)
+        echo "os:: invalid arguments"
+        echo "$arg"
+        ;;
+    esac
+  done
+}
+
+## Backup
+## Save a snapshot of this machine to local and remote storage.
+__os_backup() {
+  echo "TODO: backup this machine"
+}
+
+## Info
+## Print system information
+__os_info() {
+  echo "TODO: print system info"
+  uptime | egrep -o 'up.*(([0-9]:[0-9][0-9])|(mins))'
+}
+
+## Update
+## Check for updates to all monitored codebases.
+__os_update() {
+  echo "TODO: check for updates"
+}
+
+## Install
+## To make a fresh setup familiar.
+## TODO: Everything
+##       - Install personal git repos
+##       - Install brew
+##       - Install brew packages
+##       - Install command line tools
+##       - Install Xcode
+##       - 
+__os_install() {
+  # TODO: 
+  echo "TODO: write the install script!"
+  echo "TODO: jk, this needs to be a standalone executable"
+  echo "      ... if it is meant to install everything else."
+  echo "      ... it can't require anything else."
+}
