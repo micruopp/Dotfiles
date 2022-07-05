@@ -1,0 +1,139 @@
+#!/bin/zsh
+#
+# macOS zshrc
+# dev@micruopp.com
+
+#export TERM="xterm-256color" CLICOLOR=1
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxeggdxaagacad
+
+autoload -Uz compinit && compinit
+_comp_options+=(globdots)
+#
+# Prompt Customization
+#
+
+# Load git for prompt
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:git*' formats "- (%b) "
+# Example prompt including git status
+#PROMPT='    %F{216}%2/ ${vcs_info_msg_0_}> '
+
+# Enable prompt substitutions
+setopt prompt_subst
+
+#POSTEDIT=`echotc se`
+# List of escapes:
+#   https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
+PROMPT=$'\n    %F{209}%n@%B%m\n    %~\n    >%b%f%F{223} '
+#PROMPT='%F{blue}%m%f:%F{green}%~info_msg%f%F{red}%#%f'
+
+#RPROMPT='%S<git status>%s'
+
+precmd() {
+  # print -Pn "%f%F{216}"
+  # echo -e "%F{216}"
+  # print ""
+}
+
+preexec() {
+  print ""
+  #print -Pn "%f%F{216}"
+  # echo -e "%F{216}"
+  # echo -n "\\e[0;0m"
+}
+
+#
+# Aliases
+#
+
+alias ~='cd ~'
+#alias /='cd /' # This can act in odd ways
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+
+alias l='ls -a'
+alias la='ls -a'
+alias ll='ls -la'
+
+#
+# Personal Utilities
+#
+
+# cs should cat a README if one exists, instead of ls'ing
+cs() {
+  echo $0
+  echo $1
+  cd $1 && l
+}
+
+print_args() {
+  for arg in $@
+  do
+    echo "$arg"
+  done
+}
+
+idk() {
+  vim ~/.zshrc && source ~/.zshrc
+}
+
+doit() {
+  ls ~ | print_args
+}
+
+up() {
+  # TODO: check other package managers (brew) for updates
+  # TODO: create a priority list with the update commands
+  #   - loop thru, for each do
+  #     - check program exists
+  #     - update repositories, if applicable
+  #     - check for software / package updates
+  #     - if any, prompt user to select updates to install
+  #     - install selected updates
+  softwareupdate -l
+  echo "\nApp Store Updates\n"
+  mas list
+}
+
+# Save URL to list
+# DEPRECATED: See $HOME/Index/bin/commands:save
+# save() {
+#   echo $1 >> "$HOME/Developer/Notes/url-list.txt"
+#   # TODO: check if is already in file, if so do not add
+#   # Maybe grep can be used for this?
+# }
+
+bk() { 
+  # TODO: take flag l to print the current list to console 
+  save $1 
+}
+
+
+# Path additions / library sourcing
+
+# Autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Imports
+zsh_src='~/Developer/lib/zsh/'
+echo "$zsh_src"git.zsh
+#source zsh
+#source /Users/michalruopp/Developer/lib/zsh/idk.zsh
+
+source "$HOME/Index/bin/commands"
+
+# Source message
+time=$(date +"%H:%M:%S")
+echo ".zshrc edited @ ${time}"
+
