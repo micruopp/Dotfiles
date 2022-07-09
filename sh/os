@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 ## Operating system tool
 ## Main function
@@ -58,3 +58,32 @@ __os_install() {
   echo "      ... if it is meant to install everything else."
   echo "      ... it can't require anything else."
 }
+
+__os_battery_health() {
+  # This displays a lot of information, including:
+  #   Original capacity:
+  #     "DesignCapacity" = 4382
+  #   Current capacity:
+  #     "AppleRawMaxCapacity" = 4163
+  #   Health level:
+  #     AppleRawMax / Design => Percent 
+  
+  ioreg_output=`ioreg -l -w0 | grep Capacity.`
+  
+  design_capacity_string=`echo $ioreg_output | grep -o "\"DesignCapacity\" = [0-9]\+"`
+  design_capacity=`echo $design_capacity_string | grep -o "[0-9]\+"`
+
+  raw_max_capacity_string=`echo $ioreg_output | grep -o "\"AppleRawMaxCapacity\" = [0-9]\+"`
+  raw_max_capacity=`echo $raw_max_capacity_string | grep -o "[0-9]\+"`
+
+  echo $design_capacity
+  echo $raw_max_capacity
+  
+  percent_precision="2"
+  health_percent=$(echo "scale=$percent_precision; (raw_max_capacity / $design_capacity) * 100" | bc)
+  echo $health_percent
+}
+
+
+
+
