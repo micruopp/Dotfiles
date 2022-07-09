@@ -3,24 +3,23 @@
 ## Operating system tool
 ## Main function
 os() {
-  for arg in $@
-  do
-    case $arg in
-      backup)
-        __os_backup
-        ;;
-      info)
-        __os_info
-        ;;
-      update)
-        __os_update
-        ;;
-      *)
-        echo "os:: invalid arguments"
-        echo "$arg"
-        ;;
-    esac
-  done
+  arg=$1
+  shift 1
+  case $arg in
+    backup)
+      __os_backup
+      ;;
+    info)
+      __os_info
+      ;;
+    update)
+      __os_update $@
+      ;;
+    *)
+      echo "os:: invalid arguments"
+      echo "$arg"
+      ;;
+  esac
 }
 
 ## Backup
@@ -40,6 +39,27 @@ __os_info() {
 ## Check for updates to all monitored codebases.
 __os_update() {
   echo "TODO: check for updates"
+  up
+
+  if [[ $1 ]] ; then
+    echo $1
+  fi  
+}
+
+up() {
+  # TODO: check other package managers (brew) for updates
+  # TODO: create a priority list with the update commands
+  #   - loop thru, for each do
+  #     - check program exists
+  #     - update repositories, if applicable
+  #     - check for software / package updates
+  #     - if any, prompt user to select updates to install
+  #     - install selected updates
+  softwareupdate -l
+  echo "TODO: Check for updates to xcode-select"
+  echo "TODO: Check brew for updates"
+  echo "\nApp Store Updates\n"
+  mas list
 }
 
 ## Install

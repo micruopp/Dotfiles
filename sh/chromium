@@ -1,0 +1,9 @@
+#!/bin/sh
+
+alias chrome='chromium'
+
+chromium() {
+  # TODO: download latest version of chromium
+  # TODO: download a specific version of chromium
+  # TODO: detect os and set default
+}
