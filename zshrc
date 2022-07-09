@@ -32,6 +32,16 @@ __sv_from_board() {
 
 
 
+# TODO: copy this function and remove the "micruopp/" path
+# TODO: rename this function
+gitcl() {
+  # TODO: check if 2nd argument exists
+  git clone git@github.com:micruopp/"$1" "$2"
+}
+
+
+
+
 # Apparently this line will only run on startup...
 # And I'm assuming just on Linux.
 # [[ $(fgconsole 2>/dev/null) == 1 exec startx && /home/username/some-script.sh ]]

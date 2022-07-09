@@ -42,6 +42,8 @@ e() {
 
 alias gits='git status'
 alias gitl='git log --oneline'
+# TODO: Change gitc into a function that places the
+# first argument in quote, or opens a prompt if emptys
 alias gitc='git commit -am "'
      # This will open a prompt to
      # write the commit message.
